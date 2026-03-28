@@ -1,10 +1,30 @@
-# 工作檢核表 2026 (3月-12月)
+# 工作檢核表 2026
 
 ## 📋 檔案說明
 
-- **checklist_2026_full.html** - 完整的互動式檢核表 (90KB)
-- **generate_checklist.py** - Python 生成器腳本
-- **doc.md** - 原始任務需求文件
+本專案產生三種不同的檢核表 HTML 檔案：
+
+### 1. checklist_2026_full.html (220KB)
+完整的互動式檢核表，涵蓋 2026 年 3 月至 12 月
+- **產生方式**：
+  ```bash
+  python3 generate_checklist.py
+  python3 fix_alignment.py
+  ```
+- **內容**：每日、每週、每月任務
+
+### 2. checklist_2026_periodic.html (16KB)
+週期性任務檢核表，單頁年度視圖
+- **產生方式**：
+  ```bash
+  python3 generate_checklist_periodic.py
+  ```
+- **內容**：每季、每半年、每年任務
+
+### 3. bank_audit_checklist.html (16KB)
+銀行稽核檢核表
+- **產生方式**：手動調整製作
+- **內容**：稽核專用檢核項目
 
 ## ✨ 主要功能
 
@@ -69,22 +89,37 @@
 
 ## 🚀 使用方式
 
-1. 開啟 `checklist_2026_full.html` 在瀏覽器中
+1. 在瀏覽器中開啟對應的 HTML 檔案：
+   - `checklist_2026_full.html` - 每日/每週/每月任務
+   - `checklist_2026_periodic.html` - 每季/每半年/每年任務
+   - `bank_audit_checklist.html` - 稽核專用檢核表
 2. 勾選完成的任務
-3. 需要列印時，點擊該月的「列印本月」按鈕
+3. 需要列印時：
+   - 完整檢核表：點擊該月的「列印本月」按鈕（單月列印）
+   - 週期性檢核表：點擊「列印」按鈕（整頁列印）
 4. 所有勾選狀態會自動儲存在瀏覽器中
 
-## 🔧 重新生成
+## 🔧 重新生成檔案
 
-如需修改內容，編輯 `generate_checklist.py` 後執行：
-
+### 完整檢核表 (checklist_2026_full.html)
 ```bash
 python3 generate_checklist.py
+python3 fix_alignment.py
 ```
+
+### 週期性任務檢核表 (checklist_2026_periodic.html)
+```bash
+python3 generate_checklist_periodic.py
+```
+
+### 稽核檢核表 (bank_audit_checklist.html)
+此檔案為手動調整製作，如需修改請直接編輯 HTML 檔案。
 
 ## 📅 涵蓋範圍
 
-2026年3月至12月，共10個月份的完整檢核表。
+- **checklist_2026_full.html**：2026年3月至12月，共10個月份
+- **checklist_2026_periodic.html**：2026年全年度週期性任務
+- **bank_audit_checklist.html**：銀行稽核專用項目
 
 ## 💾 資料儲存
 
