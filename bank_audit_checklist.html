@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>銀行內部自行查核作業清單</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .print-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .print-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .print-button:active {
+            transform: translateY(0);
+        }
+
+        .content {
+            padding: 20px 30px;
+        }
+
+        .checklist-section {
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-section:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .section-content {
+            padding: 15px;
+            background: white;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 8px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .checklist-item:hover {
+            background: #f1f5f9;
+        }
+
+        .checklist-item.checked {
+            background: #ecfdf5;
+            opacity: 0.7;
+        }
+
+        .checklist-item.checked .item-text {
+            text-decoration: line-through;
+            color: #64748b;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            appearance: none;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        input[type="checkbox"]:hover {
+            border-color: #3b82f6;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .item-text {
+            flex: 1;
+            color: #334155;
+            font-size: 16px;
+        }
+
+        .item-code {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            @page {
+                size: A4 portrait;
+                margin: 1cm;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 銀行內部自行查核作業清單</h1>
+            <button class="print-button" onclick="window.print()">🖨️ 列印</button>
+        </div>
+
+        <div class="content">
+
+            <!-- Section 1 -->
+            <div class="checklist-section">
+                <div class="section-header">
+                    <span>1. 辦理銀行法利害關係人作業自行查核工作底稿</span>
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            月初印上個月 <span class="item-code">FXM0015、IRY1004、EJCICM003</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="item-text">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另需每月列印稽核處公告當自查首頁附件
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="checklist-section">
+                <div class="section-header">
+                    <span>2. 每月應列印報表—月報—相似—715</span>
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            快捷傳真委託交易服務檢查底稿
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            信託基金函證記錄檢查底稿 (715WMA)
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            外幣組合式商品函證記錄檢查底稿 (715WMB)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="checklist-section">
+                <div class="section-header">
+                    <span>3. 每月應列自查底稿報表—月報—相似—ADT</span>
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADT001-2</span>（支票存款開戶檢查底稿）、<span class="item-code">ADT001-3</span>（支票存款開戶－洗錢相關底稿）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADT004-2</span>（存摺存款開戶檢查底稿）、<span class="item-code">ADT004-3</span>（存摺存款開戶－洗錢相關底稿）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADT005-2</span>（數位存款開戶檢查底稿）、<span class="item-code">ADT005-3</span>（數位存款開戶檢查底稿）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADT025-3</span>（重建磁條、有摺廢磁交易查核表）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADTM0024</span> 分行自行動撥作業查核底稿
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="checklist-section">
+                <div class="section-header">
+                    <span>4. 每月應列自查底稿報表</span>
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">ADT022-2</span>（專戶之開立及使用情形自行查核工作底稿）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">WBM0025</span>（分行公用電腦交易情形查核表）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">WBM0036</span>（非營業時間分行公用電腦交易情形查核表）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">RXM0011</span>（臨櫃匯款扣款帳號與匯款人非為同一人之交易自行查核底稿）
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="checklist-section">
+                <div class="section-header">
+                    <span>5. 其他</span>
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            <span class="item-code">CXM0003</span>（證照查詢人員一覽表）
+                        </div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="item-text">
+                            優利 <span class="item-code">C0210</span>～歷史交易查詢底稿附件
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        // Toggle checkbox
+        function toggleCheckbox(item) {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            item.classList.toggle('checked', checkbox.checked);
+            saveProgress();
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const progress = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('auditChecklistProgress', JSON.stringify(progress));
+        }
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('auditChecklistProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach((checkbox, index) => {
+                    if (progress[index]) {
+                        checkbox.checked = true;
+                        checkbox.closest('.checklist-item').classList.add('checked');
+                    }
+                });
+            }
+        }
+
+        // Add event listeners to all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.closest('.checklist-item').classList.toggle('checked', this.checked);
+                saveProgress();
+            });
+        });
+    </script>
+</body>
+</html>
