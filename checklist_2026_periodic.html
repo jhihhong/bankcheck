@@ -178,22 +178,60 @@
         }
         
         @media print {
+            /* 1. 強制瀏覽器印出背景色與漸層 */
             body {
-                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background: white; /* 底色留白，保留區塊標題與標籤的顏色 */
                 padding: 0;
             }
-            
+
             .year-section {
                 box-shadow: none;
+                padding: 10px;
+                border: none;
             }
-            
+
             .print-button {
                 display: none;
             }
-            
+
+            /* 2. 改為直式 A4，讓排版更適合閱讀 */
             @page {
-                size: A4 landscape;
+                size: A4 portrait; 
                 margin: 1cm;
+            }
+
+            /* 3. 重新配置列印網格：上方兩欄，下方一欄 */
+            .period-grid-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* 切分為平均兩欄 */
+                gap: 15px;
+            }
+
+            .column:nth-child(1) { /* 每季任務 */
+                grid-column: 1 / 2;
+            }
+
+            .column:nth-child(2) { /* 每半年任務 */
+                grid-column: 2 / 3;
+            }
+
+            .column:nth-child(3) { /* 每年任務 - 佔滿整欄往下長 */
+                grid-column: 1 / 3; 
+            }
+
+            /* 4. 防止任務項目跨頁被切成兩半 */
+            .task-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                padding: 8px 10px;
+                margin: 6px 0;
+            }
+
+            /* 微調內距節省空間 */
+            .column {
+                padding: 10px;
             }
         }
         

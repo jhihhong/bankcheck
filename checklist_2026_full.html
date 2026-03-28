@@ -227,32 +227,79 @@
         }
         
         @media print {
+            /* 1. 強制瀏覽器印出背景色與漸層 (最關鍵) */
             body {
-                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background: white; /* 底色留白，不印大面積背景漸層以防全頁黑掉，但保留區塊顏色 */
                 padding: 0;
             }
-            
+
             .month-section {
-                page-break-after: always;
                 box-shadow: none;
+                padding: 10px;
+                border: none;
             }
-            
+
             .print-button {
                 display: none;
             }
-            
-            /* Hide other months when printing */
+
+            /* 只顯示正在列印的月份 */
             .month-section:not(.printing) {
                 display: none !important;
             }
-            
+
             .month-section.printing {
                 display: block !important;
             }
-            
+
+            /* 2. 改為直式 A4，獲得更好的字體大小 */
             @page {
-                size: A4 landscape;
+                size: A4 portrait; /* 直式列印 */
                 margin: 1cm;
+            }
+
+            /* 3. 重新配置列印時的網格佈局：
+               上方兩欄(每日、每週)，下方一欄(每月) */
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* 分成平均兩欄 */
+                gap: 15px;
+            }
+
+            .column:nth-child(1) { /* 每日任務 */
+                grid-column: 1 / 2;
+            }
+
+            .column.weekly-column { /* 每週任務 */
+                grid-column: 2 / 3;
+            }
+
+            .column:nth-child(3) { /* 每月任務 - 佔滿整排往下長 */
+                grid-column: 1 / 3; 
+            }
+
+            /* 4. 防止任務項目跨頁被切斷 */
+            .task-item, .week-row {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            /* 微調列印時的內距以節省空間 */
+            .column {
+                padding: 10px;
+            }
+            .task-item {
+                padding: 6px 10px;
+                margin: 0;
+            }
+            .week-row {
+                padding: 8px;
+                margin: 4px 0;
+            }
+            .week-label {
+                margin-bottom: 4px;
             }
         }
         
