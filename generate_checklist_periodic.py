@@ -12,7 +12,7 @@ QUARTERLY_TASKS = [
     {
         "months": [1, 4, 7, 10],
         "deadline": "【每季10日前填報】",
-        "task": "單位最適員額調查表",
+        "task": "單位最適員額調查表(people: 1/1, 4/1, 7/1, 10/1)",
         "subtasks": [],
         "reference": ""
     },
@@ -25,8 +25,8 @@ QUARTERLY_TASKS = [
     },
     {
         "months": [3, 6, 9, 12],
-        "deadline": "【當月填報】",
-        "task": "安全維護檢查報告",
+        "deadline": "【當月月底填報】",
+        "task": "安全維護檢查報告(總務)",
         "subtasks": [],
         "reference": ""
     },
@@ -34,7 +34,7 @@ QUARTERLY_TASKS = [
         "months": [1, 4, 7, 10],
         "deadline": "【每季結束5日內】",
         "task": "內部控制聲明書",
-        "subtasks": [],
+        "subtasks": ["路徑：內網→電子表單→稽核處"],
         "reference": ""
     }
 ]
@@ -68,6 +68,20 @@ SEMI_ANNUAL_TASKS = [
         "months": [1, 7],
         "deadline": "",
         "task": "自衛編組演練",
+        "subtasks": [],
+        "reference": ""
+    },
+    {
+        "months": [],
+        "deadline": "",
+        "task": "庫存現金點算查核（　/　）",
+        "subtasks": [],
+        "reference": ""
+    },
+    {
+        "months": [],
+        "deadline": "",
+        "task": "債權憑證人工盤點（　/　）",
         "subtasks": [],
         "reference": ""
     }
@@ -110,7 +124,10 @@ ANNUAL_TASKS = [
             "櫃員主任、ATM 經辦、DAO 至少連續 3 個營業日，並於 PeopleSoft 系統登錄",
             "理專由總行指定期間，於輪調前一日至 PeopleSoft 系統登錄",
             "均應填寫「無預警指定輪調登記表」",
-            "應填寫「職務交接查核紀錄表」"
+            "應填寫「職務交接查核紀錄表」",
+            "櫃員主任（  /   ~   /  ）",
+            "ATM 經辦（  /   ~   /  ）",
+            "DAO （03/25 ~ 03/27）", 
         ],
         "reference": ""
     }
